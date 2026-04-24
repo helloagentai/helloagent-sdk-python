@@ -13,6 +13,7 @@ import websockets
 
 from .v1 import protocol_pb2 as pb
 from .crypto import Session
+from .tools import ToolRegistry
 
 log = logging.getLogger("helloagent")
 
@@ -89,10 +90,19 @@ class Agent(_BaseConn):
             handle = "" if token.startswith("ha_") else token
         super().__init__(handle, token, pb.ROLE_AGENT, relay_url)
         self._handler: Optional[Handler] = None
+        self.tools = ToolRegistry()
 
     def on_message(self, fn: Handler) -> Handler:
         self._handler = fn
         return fn
+
+    def tool(self, *, name: Optional[str] = None, description: Optional[str] = None,
+             parameters: Optional[dict] = None):
+        """Register a tool callable. Exposed via `agent.tools` for the dev's LLM call."""
+        def decorator(fn):
+            self.tools.register(fn, name=name, description=description, parameters=parameters)
+            return fn
+        return decorator
 
     def connect(self):
         asyncio.run(self.run())
