@@ -35,13 +35,22 @@ def _req(method: str, url: str, token: str, body: Optional[dict] = None) -> tupl
         raise RuntimeError(f"{e.code} {payload.get('code')}: {payload.get('message')}") from None
 
 
-def link(provider: str, user_jwt: str, api: str = DEFAULT_API) -> dict:
+def link(provider: str, user_jwt: str, agent_name: Optional[str] = None,
+         api: str = DEFAULT_API) -> dict:
     """Provision (or rotate) a channel agent for the authenticated user.
 
-    Returns {provider, handle, display_name, user_handle, token, relay_ws}.
-    The `token` is shown once; store it server-side on the provider.
+    `agent_name` is the user-chosen suffix of the agent handle: passing
+    "jarvis" for owner @alice yields handle @alice/jarvis. Required on first
+    link; ignored on relink (the bound handle wins, token rotates).
+
+    Returns {provider, handle, agent_name, display_name, user_handle, token,
+    relay_ws}. The `token` is shown once; store it server-side on the
+    provider.
     """
-    _, payload = _req("POST", f"{api}/v1/channels/{provider}/link", user_jwt, body={})
+    body: dict = {}
+    if agent_name is not None:
+        body["agent_name"] = agent_name
+    _, payload = _req("POST", f"{api}/v1/channels/{provider}/link", user_jwt, body=body)
     return payload
 
 
