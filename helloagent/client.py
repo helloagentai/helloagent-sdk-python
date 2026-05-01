@@ -40,6 +40,17 @@ class IncomingMessage:
 Handler = Callable[[IncomingMessage], Union[str, Awaitable[str], AsyncIterator[str]]]
 
 
+class AuthFailedError(Exception):
+    """Raised when the relay rejects our auth handshake (token revoked, rotated,
+    agent deleted, etc). Distinct from generic socket / network errors so the
+    run loop and callers can branch on it without parsing strings.
+    """
+
+    def __init__(self, detail: str):
+        super().__init__(f"auth failed: {detail}")
+        self.detail = detail
+
+
 class _BaseConn:
     def __init__(self, handle: str, token: str, role: int, relay_url: str = DEFAULT_RELAY):
         self.handle = handle
@@ -67,7 +78,7 @@ class _BaseConn:
         raw = await self.ws.recv()
         env = pb.Envelope(); env.ParseFromString(raw)
         if not env.HasField("auth_response") or not env.auth_response.ok:
-            raise RuntimeError(f"auth failed: {env}")
+            raise AuthFailedError(str(env))
         if env.auth_response.handle:
             self.handle = env.auth_response.handle
         log.info("authenticated as %s", self.handle)
@@ -95,6 +106,29 @@ class Agent(_BaseConn):
     def on_message(self, fn: Handler) -> Handler:
         self._handler = fn
         return fn
+
+    async def send(self, to_handle: str, text: str, conversation_id: Optional[str] = None) -> str:
+        """Proactively send a message (not as a reply). Returns the message id.
+
+        Mirrors the TS SDK's `Agent.send()`. Useful for assistant-initiated
+        outreach, cron-driven notifications, or cross-platform delivery via
+        Hermes' send_message_tool. Requires the run loop to have authenticated
+        the socket; raises if `self.ws` is not set.
+        """
+        if self.ws is None:
+            raise RuntimeError("agent not connected")
+        msg_id = _new_id()
+        env = pb.Envelope(
+            message_id=msg_id, ts_unix_ms=_now_ms(),
+            send_message=pb.SendMessage(
+                conversation_id=conversation_id or f"{self.handle}:{to_handle}",
+                from_handle=self.handle,
+                to_handle=to_handle,
+                text=text,
+            ),
+        )
+        await self._send(env)
+        return msg_id
 
     def tool(self, *, name: Optional[str] = None, description: Optional[str] = None,
              parameters: Optional[dict] = None):

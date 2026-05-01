@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "helloagent"
+version = "0.1.0"
+description = "HelloAgent Python SDK — relay client + channel-link helpers."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "websockets>=11.0",
+    "protobuf>=4.21,<7",
+]
+
+[tool.setuptools.packages.find]
+include = ["helloagent*"]
+
+[tool.setuptools.package-data]
+helloagent = ["v1/*.py"]
