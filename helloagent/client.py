@@ -233,13 +233,41 @@ def _http_json(url: str, body: dict) -> dict:
         raise RuntimeError(f"{e.code}: {e.read().decode()}") from None
 
 
-def register_user(email: str, password: str, handle: str, api: str = DEFAULT_API) -> dict:
-    return _http_json(f"{api}/v1/auth/register",
-                      {"email": email, "password": password, "handle": handle})
+_AUTH_REMOVED_MSG = (
+    "register_user / login_user were removed when HelloAgent moved user "
+    "identity to Supabase Auth. The relay no longer hosts /v1/auth/register "
+    "or /v1/auth/login. Use supabase-py to sign in (returns an access token), "
+    "then construct UserClient(token=<access_token>, handle=<your-handle>). "
+    "First-time users must claim a handle via POST /v1/profile before WS auth "
+    "succeeds. See docs/web/auth-migration.md."
+)
 
 
-def login_user(email: str, password: str, api: str = DEFAULT_API) -> dict:
-    return _http_json(f"{api}/v1/auth/login", {"email": email, "password": password})
+def register_user(*_args, **_kwargs):
+    raise NotImplementedError(_AUTH_REMOVED_MSG)
+
+
+def login_user(*_args, **_kwargs):
+    raise NotImplementedError(_AUTH_REMOVED_MSG)
+
+
+def claim_handle(access_token: str, handle: str, api: str = DEFAULT_API) -> dict:
+    """POST /v1/profile to claim a handle for a Supabase-authenticated user.
+
+    Use this once after a fresh Supabase sign-up / sign-in. Subsequent calls
+    return the existing profile rather than erroring.
+    """
+    data = json.dumps({"handle": handle}).encode()
+    req = urllib.request.Request(
+        f"{api}/v1/profile",
+        data=data,
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {access_token}"},
+    )
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"{e.code}: {e.read().decode()}") from None
 
 
 class UserClient(_BaseConn):
