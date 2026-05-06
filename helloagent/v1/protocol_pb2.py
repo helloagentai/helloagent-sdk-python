@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chelloagent/v1/protocol.proto\x12\rhelloagent.v1\"\x8f\x03\n\x08\x45nvelope\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12\x12\n\nts_unix_ms\x18\x02 \x01(\x03\x12\x32\n\x0c\x61uth_request\x18\n \x01(\x0b\x32\x1a.helloagent.v1.AuthRequestH\x00\x12\x34\n\rauth_response\x18\x0b \x01(\x0b\x32\x1b.helloagent.v1.AuthResponseH\x00\x12\x32\n\x0csend_message\x18\x0c \x01(\x0b\x32\x1a.helloagent.v1.SendMessageH\x00\x12!\n\x03\x61\x63k\x18\r \x01(\x0b\x32\x12.helloagent.v1.AckH\x00\x12\x34\n\tdelivered\x18\x0e \x01(\x0b\x32\x1f.helloagent.v1.MessageDeliveredH\x00\x12\x32\n\x0cstream_chunk\x18\x0f \x01(\x0b\x32\x1a.helloagent.v1.StreamChunkH\x00\x12%\n\x05\x65rror\x18\x10 \x01(\x0b\x32\x14.helloagent.v1.ErrorH\x00\x42\t\n\x07payload\"O\n\x0b\x41uthRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06handle\x18\x02 \x01(\t\x12!\n\x04role\x18\x03 \x01(\x0e\x32\x13.helloagent.v1.Role\">\n\x0c\x41uthResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x12\n\nsession_id\x18\x02 \x01(\t\x12\x0e\n\x06handle\x18\x03 \x01(\t\"\x8a\x01\n\x0bSendMessage\x12\x17\n\x0f\x63onversation_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66rom_handle\x18\x02 \x01(\t\x12\x11\n\tto_handle\x18\x03 \x01(\t\x12\x0c\n\x04text\x18\x04 \x01(\t\x12\x16\n\x0e\x65ncrypted_body\x18\x05 \x01(\x0c\x12\x14\n\x0cis_encrypted\x18\x06 \x01(\x08\"\x1d\n\x03\x41\x63k\x12\x16\n\x0eref_message_id\x18\x01 \x01(\t\"*\n\x10MessageDelivered\x12\x16\n\x0eref_message_id\x18\x01 \x01(\t\"\xb4\x01\n\x0bStreamChunk\x12\x17\n\x0f\x63onversation_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66rom_handle\x18\x02 \x01(\t\x12\x11\n\tto_handle\x18\x03 \x01(\t\x12\x16\n\x0eref_message_id\x18\x04 \x01(\t\x12\x0c\n\x04\x62ody\x18\x05 \x01(\t\x12\x10\n\x08is_final\x18\x06 \x01(\x08\x12\x16\n\x0e\x65ncrypted_body\x18\x07 \x01(\x0c\x12\x14\n\x0cis_encrypted\x18\x08 \x01(\x08\">\n\x05\x45rror\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x16\n\x0eref_message_id\x18\x03 \x01(\t*;\n\x04Role\x12\x14\n\x10ROLE_UNSPECIFIED\x10\x00\x12\r\n\tROLE_USER\x10\x01\x12\x0e\n\nROLE_AGENT\x10\x02\x42\x38Z6github.com/helloagent/relay/helloagent/v1;helloagentv1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chelloagent/v1/protocol.proto\x12\rhelloagent.v1\"\x8f\x03\n\x08\x45nvelope\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12\x12\n\nts_unix_ms\x18\x02 \x01(\x03\x12\x32\n\x0c\x61uth_request\x18\n \x01(\x0b\x32\x1a.helloagent.v1.AuthRequestH\x00\x12\x34\n\rauth_response\x18\x0b \x01(\x0b\x32\x1b.helloagent.v1.AuthResponseH\x00\x12\x32\n\x0csend_message\x18\x0c \x01(\x0b\x32\x1a.helloagent.v1.SendMessageH\x00\x12!\n\x03\x61\x63k\x18\r \x01(\x0b\x32\x12.helloagent.v1.AckH\x00\x12\x34\n\tdelivered\x18\x0e \x01(\x0b\x32\x1f.helloagent.v1.MessageDeliveredH\x00\x12\x32\n\x0cstream_chunk\x18\x0f \x01(\x0b\x32\x1a.helloagent.v1.StreamChunkH\x00\x12%\n\x05\x65rror\x18\x10 \x01(\x0b\x32\x14.helloagent.v1.ErrorH\x00\x42\t\n\x07payload\"y\n\x0b\x41uthRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06handle\x18\x02 \x01(\t\x12!\n\x04role\x18\x03 \x01(\x0e\x32\x13.helloagent.v1.Role\x12\x15\n\rsince_wire_id\x18\x04 \x01(\t\x12\x11\n\tdevice_id\x18\x05 \x01(\t\">\n\x0c\x41uthResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x12\x12\n\nsession_id\x18\x02 \x01(\t\x12\x0e\n\x06handle\x18\x03 \x01(\t\"\x8a\x01\n\x0bSendMessage\x12\x17\n\x0f\x63onversation_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66rom_handle\x18\x02 \x01(\t\x12\x11\n\tto_handle\x18\x03 \x01(\t\x12\x0c\n\x04text\x18\x04 \x01(\t\x12\x16\n\x0e\x65ncrypted_body\x18\x05 \x01(\x0c\x12\x14\n\x0cis_encrypted\x18\x06 \x01(\x08\"\x1d\n\x03\x41\x63k\x12\x16\n\x0eref_message_id\x18\x01 \x01(\t\"*\n\x10MessageDelivered\x12\x16\n\x0eref_message_id\x18\x01 \x01(\t\"\xb4\x01\n\x0bStreamChunk\x12\x17\n\x0f\x63onversation_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66rom_handle\x18\x02 \x01(\t\x12\x11\n\tto_handle\x18\x03 \x01(\t\x12\x16\n\x0eref_message_id\x18\x04 \x01(\t\x12\x0c\n\x04\x62ody\x18\x05 \x01(\t\x12\x10\n\x08is_final\x18\x06 \x01(\x08\x12\x16\n\x0e\x65ncrypted_body\x18\x07 \x01(\x0c\x12\x14\n\x0cis_encrypted\x18\x08 \x01(\x08\">\n\x05\x45rror\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x16\n\x0eref_message_id\x18\x03 \x01(\t*;\n\x04Role\x12\x14\n\x10ROLE_UNSPECIFIED\x10\x00\x12\r\n\tROLE_USER\x10\x01\x12\x0e\n\nROLE_AGENT\x10\x02\x42\x38Z6github.com/helloagent/relay/helloagent/v1;helloagentv1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,22 +32,22 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'helloagent.v1.protocol_pb2'
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z6github.com/helloagent/relay/helloagent/v1;helloagentv1'
-  _globals['_ROLE']._serialized_start=1057
-  _globals['_ROLE']._serialized_end=1116
+  _globals['_ROLE']._serialized_start=1099
+  _globals['_ROLE']._serialized_end=1158
   _globals['_ENVELOPE']._serialized_start=48
   _globals['_ENVELOPE']._serialized_end=447
   _globals['_AUTHREQUEST']._serialized_start=449
-  _globals['_AUTHREQUEST']._serialized_end=528
-  _globals['_AUTHRESPONSE']._serialized_start=530
-  _globals['_AUTHRESPONSE']._serialized_end=592
-  _globals['_SENDMESSAGE']._serialized_start=595
-  _globals['_SENDMESSAGE']._serialized_end=733
-  _globals['_ACK']._serialized_start=735
-  _globals['_ACK']._serialized_end=764
-  _globals['_MESSAGEDELIVERED']._serialized_start=766
-  _globals['_MESSAGEDELIVERED']._serialized_end=808
-  _globals['_STREAMCHUNK']._serialized_start=811
-  _globals['_STREAMCHUNK']._serialized_end=991
-  _globals['_ERROR']._serialized_start=993
-  _globals['_ERROR']._serialized_end=1055
+  _globals['_AUTHREQUEST']._serialized_end=570
+  _globals['_AUTHRESPONSE']._serialized_start=572
+  _globals['_AUTHRESPONSE']._serialized_end=634
+  _globals['_SENDMESSAGE']._serialized_start=637
+  _globals['_SENDMESSAGE']._serialized_end=775
+  _globals['_ACK']._serialized_start=777
+  _globals['_ACK']._serialized_end=806
+  _globals['_MESSAGEDELIVERED']._serialized_start=808
+  _globals['_MESSAGEDELIVERED']._serialized_end=850
+  _globals['_STREAMCHUNK']._serialized_start=853
+  _globals['_STREAMCHUNK']._serialized_end=1033
+  _globals['_ERROR']._serialized_start=1035
+  _globals['_ERROR']._serialized_end=1097
 # @@protoc_insertion_point(module_scope)
