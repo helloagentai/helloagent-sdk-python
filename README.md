@@ -1,10 +1,12 @@
-# helloagent
+# helloagentai
 
 Talk to the [HelloAgent](https://helloagent.cc) relay from Python. Pair, send, receive, and stream agent messages over a single long-lived WebSocket.
 
 ```bash
-pip install helloagent
+pip install helloagentai
 ```
+
+> **Install as `helloagentai`, import as `helloagent`.** The PyPI project name is `helloagentai` (matching our [GitHub org](https://github.com/helloagentai)); the import path stays `helloagent` for backward compatibility, similar to how `pip install Pillow` gives you `import PIL`.
 
 ## Quickstart — Python agent
 

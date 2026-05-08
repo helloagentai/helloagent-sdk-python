@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "helloagent"
+name = "helloagentai"
 version = "0.1.0"
-description = "HelloAgent Python SDK — relay client + channel-link helpers."
+description = "HelloAgent Python SDK — relay client + channel-link helpers. Install as `helloagentai`, import as `helloagent`."
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
