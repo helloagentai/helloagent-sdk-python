@@ -7,11 +7,30 @@ name = "helloagent"
 version = "0.1.0"
 description = "HelloAgent Python SDK — relay client + channel-link helpers."
 readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.10"
+authors = [{name = "HelloAgent"}]
+keywords = ["helloagent", "agent", "websocket", "relay", "messaging", "sdk", "ai-agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "websockets>=11.0",
     "protobuf>=4.21,<7",
 ]
+
+[project.urls]
+Homepage = "https://github.com/helloagentai/helloagent-sdk-python"
+Documentation = "https://github.com/helloagentai/helloagent-sdk-python#readme"
+Repository = "https://github.com/helloagentai/helloagent-sdk-python.git"
+Issues = "https://github.com/helloagentai/helloagent-sdk-python/issues"
 
 [tool.setuptools.packages.find]
 include = ["helloagent*"]
