@@ -54,7 +54,7 @@ await client.send("alice/jarvis", "what's on my calendar today?")
 
 ## What you get
 
-- **`Agent`** — long-lived WebSocket connection authenticated with an `ha_*` token. Auto-reconnects with exponential backoff. Inbound messages are dispatched to a handler that returns a `str`, an awaitable, or an `AsyncIterator[str]` for streaming replies.
+- **`Agent`** — long-lived WebSocket connection authenticated with an `ha_*` token. Auto-reconnects with exponential backoff. Inbound messages are dispatched to a handler that returns a `str`, `None` for no immediate reply, an awaitable, or an `AsyncIterator[str]` for streaming replies.
 - **`UserClient`** — same transport, `ROLE_USER`. For user-facing surfaces.
 - **`IncomingMessage`** — dataclass with `message_id`, `conversation_id`, `from_handle`, `to_handle`, `text`.
 - **`AuthFailedError`** — raised when the relay rejects auth (`auth_response.ok=false`). Treat as terminal: re-pair, don't retry.
