@@ -37,7 +37,8 @@ class IncomingMessage:
     text: str
 
 
-Handler = Callable[[IncomingMessage], Union[str, Awaitable[str], AsyncIterator[str]]]
+HandlerResult = Union[str, None, Awaitable[Optional[str]], AsyncIterator[str]]
+Handler = Callable[[IncomingMessage], HandlerResult]
 
 
 class AuthFailedError(Exception):
@@ -76,7 +77,8 @@ class _BaseConn:
         )
         await self.ws.send(auth.SerializeToString())
         raw = await self.ws.recv()
-        env = pb.Envelope(); env.ParseFromString(raw)
+        env = pb.Envelope()
+        env.ParseFromString(raw)
         if not env.HasField("auth_response") or not env.auth_response.ok:
             raise AuthFailedError(str(env))
         if env.auth_response.handle:
@@ -88,7 +90,8 @@ class _BaseConn:
 
     async def _recv(self) -> pb.Envelope:
         raw = await self.ws.recv()
-        env = pb.Envelope(); env.ParseFromString(raw)
+        env = pb.Envelope()
+        env.ParseFromString(raw)
         return env
 
 
@@ -189,7 +192,9 @@ class Agent(_BaseConn):
             await self._send_chunk(incoming, env.message_id, "", True)
         else:
             text = await result if inspect.isawaitable(result) else result
-            await self._send_chunk(incoming, env.message_id, text or "", True)
+            if text is None:
+                return
+            await self._send_chunk(incoming, env.message_id, text, True)
 
     async def _send_chunk(self, incoming: IncomingMessage, ref_id: str, body: str, final: bool):
         sess = self._session_for(incoming.from_handle)
